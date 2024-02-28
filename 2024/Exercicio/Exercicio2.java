@@ -14,7 +14,4 @@ public class Exercicio2 {
 
         System.out.println((idade <= 18) ? "Menor de idade" : "Maior de idade");
     }
-
-    
-    
 }
