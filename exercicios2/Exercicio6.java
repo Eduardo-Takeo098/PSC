@@ -18,6 +18,6 @@ public class Exercicio6 {
         
         for (double numero : listNum) {
             JOptionPane.showMessageDialog(null, numero);
-        }
+        } 
     }
 }
