@@ -1,7 +1,7 @@
 package com.GraphiFlow.project_PSC.services;
 
-import com.GraphiFlow.project_PSC.entities.User;
-import com.GraphiFlow.project_PSC.repositories.UserRepository;
+import com.GraphiFlow.project_PSC.entities.UserAdm;
+import com.GraphiFlow.project_PSC.repositories.UserAdmRepository;
 import com.GraphiFlow.project_PSC.services.exceptions.DatabaseException;
 import com.GraphiFlow.project_PSC.services.exceptions.ResourceNotFoundException;
 
@@ -15,21 +15,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserAdmService {
 
     @Autowired
-    private UserRepository repository;
+    private UserAdmRepository repository;
 
-    public List<User> findAll() {
+    public List<UserAdm> findAll() {
         return repository.findAll();
     }
 
-    public User findById(Long id) {
-        Optional<User> obj = repository.findById(id);
+    public UserAdm findById(Long id) {
+        Optional<UserAdm> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public User insert(User obj) {
+    public UserAdm insert(UserAdm obj) {
         return repository.save(obj);
     }
 
@@ -40,12 +40,12 @@ public class UserService {
             throw new ResourceNotFoundException(id);
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
-        };
+        }
     }
 
-    public User update(Long id, User obj) {
+    public UserAdm update(Long id, UserAdm obj) {
         try {
-            User entity = repository.getReferenceById(id);
+            UserAdm entity = repository.getOne(id);
             updateData(entity, obj);
             return repository.save(entity);
         } catch (EntityNotFoundException e) {
@@ -53,20 +53,10 @@ public class UserService {
         }
     }
 
-    private void updateData(User entity, User obj) {
+    private void updateData(UserAdm entity, UserAdm obj) {
         entity.setName(obj.getName());
         entity.setEmail(obj.getEmail());
-        entity.setIdade(obj.getIdade());
         entity.setSenha(obj.getSenha());
     }
 
-    public User authenticate(String email, String senha) {
-        List<User> users = repository.findAll();
-        for (User user : users) {
-            if (user.getEmail().equals(email) && user.getSenha().equals(senha)) {
-                return user;
-            }
-        }
-        throw new ResourceNotFoundException("Email ou senha inválida");
-    }
 }

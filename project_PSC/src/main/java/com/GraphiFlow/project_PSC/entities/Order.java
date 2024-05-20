@@ -30,12 +30,12 @@ public class Order implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private User client;
+    private UserAdm client;
 
     public Order() {
     }
 
-    public Order(Long id, Instant moment, OrderStatus orderStatus,User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus,UserAdm client) {
         super();
         this.id = id;
         this.moment = moment;
@@ -69,11 +69,11 @@ public class Order implements Serializable {
         }
     }
 
-    public User getClient() {
+    public UserAdm getClient() {
         return client;
     }
 
-    public void setClient(User client) {
+    public void setClient(UserAdm client) {
         this.client = client;
     }
 

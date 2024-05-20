@@ -1,14 +1,8 @@
 package com.GraphiFlow.project_PSC.config;
 
-import com.GraphiFlow.project_PSC.entities.Task;
-import com.GraphiFlow.project_PSC.entities.User;
-import com.GraphiFlow.project_PSC.entities.Order;
-import com.GraphiFlow.project_PSC.entities.Category;
+import com.GraphiFlow.project_PSC.entities.*;
 import com.GraphiFlow.project_PSC.entities.enums.OrderStatus;
-import com.GraphiFlow.project_PSC.repositories.CategoryRepository;
-import com.GraphiFlow.project_PSC.repositories.OrderRepository;
-import com.GraphiFlow.project_PSC.repositories.TaskRepository;
-import com.GraphiFlow.project_PSC.repositories.UserRepository;
+import com.GraphiFlow.project_PSC.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,8 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private UserAdmRepository userAdmRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -61,10 +57,13 @@ public class TestConfig implements CommandLineRunner {
         User u1 = new User(null, "Pedro", 43, 'M', "pedro098@gmail.com", "111.111.111.12", "Senha");
         User u2 = new User(null, "João", 23, 'M', "joão098@gmail.com", "111.111.111.13", "Senha");
 
-        Order o1 = new Order(null, Instant.parse("2024-06-20T19:53:07Z"), OrderStatus.CANCELED, u1);
-        Order o2 = new Order(null, Instant.parse("2024-07-21T03:42:10Z"), OrderStatus.WAITING_DELIVERY, u2);
-        Order o3 = new Order(null, Instant.parse("2024-07-22T15:21:22Z"), OrderStatus.DELIVERED, u1);
+        UserAdm uadm1 = new UserAdm(null, "Adm", "adm@gmail.com","Admin");
 
+        Order o1 = new Order(null, Instant.parse("2024-06-20T19:53:07Z"), OrderStatus.CANCELED, uadm1);
+        Order o2 = new Order(null, Instant.parse("2024-07-21T03:42:10Z"), OrderStatus.WAITING_DELIVERY, uadm1);
+        Order o3 = new Order(null, Instant.parse("2024-07-22T15:21:22Z"), OrderStatus.DELIVERED, uadm1);
+
+        userAdmRepository.saveAll(Arrays.asList(uadm1));
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
     }

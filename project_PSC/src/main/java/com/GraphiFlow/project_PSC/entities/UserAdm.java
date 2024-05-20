@@ -14,30 +14,28 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_user")
-public class User implements Serializable {
+@Table(name = "tb_user_adm")
+public class UserAdm implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Integer idade;
-    private Character sexo;
     private String email;
-    private String cpf;
     private String senha;
 
-    public User() {
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
+
+    public UserAdm() {
     }
 
-    public User(Long id, String name, Integer idade, Character sexo, String email, String cpf, String senha) {
+    public UserAdm(Long id, String name, String email, String senha) {
         this.id = id;
         this.name = name;
-        this.idade = idade;
-        this.sexo = sexo;
         this.email = email;
-        this.cpf = cpf;
         this.senha = senha;
     }
 
@@ -57,36 +55,12 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public Integer getIdade() {
-        return idade;
-    }
-
-    public void setIdade(Integer idade) {
-        this.idade = idade;
-    }
-
-    public Character getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(Character sexo) {
-        this.sexo = sexo;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getSenha() {
@@ -97,6 +71,9 @@ public class User implements Serializable {
         this.senha = senha;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -104,14 +81,12 @@ public class User implements Serializable {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id);
+        UserAdm userAdm = (UserAdm) o;
+        return Objects.equals(id, userAdm.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
     }
-
-
 }
