@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -14,13 +15,12 @@ public class TaskService {
     @Autowired
     private TaskRepository repository;
 
-    public List<Task> findAll() {
-        return repository.findAll();
+    public Map<String, List<Task>> findAllGroupedByCategory() {
+        List<Task> tasks = repository.findAll();
+        return tasks.stream().collect(Collectors.groupingBy(task -> task.getCategories().iterator().next().getName()));
     }
 
     public Task findById(Long id) {
-        Optional<Task> obj = repository.findById(id);
-        return obj.get();
+        return repository.findById(id).orElse(null);
     }
-
 }

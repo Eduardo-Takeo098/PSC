@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/tasks")
@@ -18,10 +19,10 @@ public class TaskResource {
     @Autowired
     private TaskService service;
 
-    @GetMapping
-    public ResponseEntity<List<Task>> findAll() {
-        List<Task> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+    @GetMapping("/groupedByCategory")
+    public ResponseEntity<Map<String, List<Task>>> findAllGroupedByCategory() {
+        Map<String, List<Task>> tasksByCategory = service.findAllGroupedByCategory();
+        return ResponseEntity.ok().body(tasksByCategory);
     }
 
     @GetMapping(value = "/{id}")
@@ -29,5 +30,4 @@ public class TaskResource {
         Task obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
-
 }
