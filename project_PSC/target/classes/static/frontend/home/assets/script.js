@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Menu Toggle
+
     const menuToggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
 
@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Fetching data from API for tasks
     fetch('/tasks/groupedByCategory')
         .then(response => response.json())
         .then(data => {
@@ -36,8 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error fetching task data:', error));
 
-    // Fetching data from API for orders
-    fetch('/orders')
+    fetch('/projects')
         .then(response => response.json())
         .then(data => {
             const statuses = {
@@ -46,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 DELIVERED: 0
             };
 
-            data.forEach(order => {
-                statuses[order.orderStatus]++;
+            data.forEach(project => {
+                statuses[project.projectStatus]++;
             });
 
             const ctx = document.getElementById('taskChart').getContext('2d');
@@ -65,5 +63,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         })
-        .catch(error => console.error('Error fetching order data:', error));
+        .catch(error => console.error('Error fetching project data:', error));
 });

@@ -1,6 +1,6 @@
 package com.GraphiFlow.project_PSC.entities;
 
-import com.GraphiFlow.project_PSC.entities.enums.OrderStatus;
+import com.GraphiFlow.project_PSC.entities.enums.ProjectStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
@@ -15,8 +15,8 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_order")
-public class Order implements Serializable {
+@Table(name = "tb_project")
+public class Project implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -26,20 +26,20 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
-    private Integer orderStatus;
+    private Integer projectStatus;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
     private UserAdm client;
 
-    public Order() {
+    public Project() {
     }
 
-    public Order(Long id, Instant moment, OrderStatus orderStatus,UserAdm client) {
+    public Project(Long id, Instant moment, ProjectStatus projectStatus,UserAdm client) {
         super();
         this.id = id;
         this.moment = moment;
-        setOrderStatus(orderStatus);
+        setProjectStatus(projectStatus);
         this.client = client;
     }
 
@@ -59,13 +59,13 @@ public class Order implements Serializable {
         this.moment = moment;
     }
 
-    public OrderStatus getOrderStatus() {
-        return OrderStatus.valueOf(orderStatus);
+    public ProjectStatus getProjectStatus() {
+        return ProjectStatus.valueOf(projectStatus);
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
-        if (orderStatus != null) {
-            this.orderStatus = orderStatus.getCode();
+    public void setProjectStatus(ProjectStatus projectStatus) {
+        if (projectStatus != null) {
+            this.projectStatus = projectStatus.getCode();
         }
     }
 
@@ -81,8 +81,8 @@ public class Order implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return Objects.equals(id, order.id);
+        Project project = (Project) o;
+        return Objects.equals(id, project.id);
     }
 
     @Override

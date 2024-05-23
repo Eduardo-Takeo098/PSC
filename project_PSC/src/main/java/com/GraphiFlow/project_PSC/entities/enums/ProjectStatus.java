@@ -1,6 +1,6 @@
 package com.GraphiFlow.project_PSC.entities.enums;
 
-public enum OrderStatus {
+public enum ProjectStatus {
 
     WAITING_DELIVERY(1),
     SHIPPED(2),
@@ -9,7 +9,7 @@ public enum OrderStatus {
 
     private int code;
 
-    private OrderStatus(int code) {
+    private ProjectStatus(int code) {
         this.code = code;
     }
 
@@ -17,8 +17,8 @@ public enum OrderStatus {
         return code;
     }
 
-    public static OrderStatus valueOf(int code) {
-        for (OrderStatus value : OrderStatus.values())  {
+    public static ProjectStatus valueOf(int code) {
+        for (ProjectStatus value : ProjectStatus.values())  {
             if (value.getCode() == code) {
                 return value;
             }

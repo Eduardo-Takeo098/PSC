@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphiFlow - Home Adm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="animation-container">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+        <div class="floating-shape shape4"></div>
+        <div class="floating-shape shape5"></div>
+        <div class="floating-shape shape6"></div>
+        <div class="floating-shape shape7"></div>
+        <div class="floating-shape shape8"></div>
+        <div class="floating-shape shape9"></div>
+        <div class="floating-shape shape10"></div>
+        <div class="floating-shape shape11"></div>
+        <div class="floating-shape shape12"></div>
+    </div>
+    <div class="form-box">
+        <header>
+            <div class="navbar">
+                <i class="fas fa-bars" id="menu-toggle"></i>
+                <div class="menu" id="menu">
+                    <a href="#">Home</a>
+                    <a href="#">Sobre</a>
+                    <a href="#">Contato</a>
+                </div>
+                <span>GraphiFlow</span>
+            </div>
+            <div class="search-profile">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <i class="fas fa-user-circle profile-icon"></i>
+            </div>
+        </header>
+        <div class="content">
+            <div class="buttons">
+                <button id="project-button">Projetos</button>
+                <button>Tarefas</button>
+                <button>Colaboradores</button>
+                <button>Configurações Pessoais</button>
+            </div>
+            <div class="main-content">
+                <div class="section">
+                    <canvas id="taskChart"></canvas>
+                </div>
+                <div class="section">
+                    <h3>Tarefas em Aberto</h3>
+                    <ul>
+                        <li>Tarefa 1</li>
+                        <li>Tarefa 2</li>
+                        <li>Tarefa 3</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>Notificações</h3>
+                    <ul>
+                        <li>Notificação 1</li>
+                        <li>Notificação 2</li>
+                        <li>Notificação 3</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tasks-recent">
+                <div class="task-item">
+                    <img src="#" alt="Tarefa 1">
+                    <div>
+                        <strong>Tarefa 1</strong>
+                        <p>Descrição da tarefa 1.</p>
+                    </div>
+                </div>
+                <div class="task-item">
+                    <img src="#" alt="Tarefa 2">
+                    <div>
+                        <strong>Tarefa 2</strong>
+                        <p>Descrição da tarefa 2.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="project-form-modal" class="project-form-modal">
+    <div class="project-form-content">
+        <span class="close">&times;</span>
+        <form id="project-form">
+            <label for="taskName">Nome:</label>
+            <input type="text" id="taskName" name="taskName" required>
+
+            <label for="taskDescription">Descrição:</label>
+            <textarea id="taskDescription" name="taskDescription" required></textarea>
+
+            <label for="taskUrlImg">URL da img (caso tiver):</label>
+            <input type="url" id="taskUrlImg" name="taskUrlImg">
+
+            <button type="submit" id="enviar-button">Enviar</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<script src="./assets/script.js"></script>
+</body>
+</html>

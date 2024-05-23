@@ -27,7 +27,7 @@ public class UserAdm implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();
+    private List<Project> projects = new ArrayList<>();
 
     public UserAdm() {
     }
@@ -71,8 +71,8 @@ public class UserAdm implements Serializable {
         this.senha = senha;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public List<Project> getProjects() {
+        return projects;
     }
 
     @Override

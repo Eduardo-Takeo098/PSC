@@ -1,7 +1,7 @@
 package com.GraphiFlow.project_PSC.config;
 
 import com.GraphiFlow.project_PSC.entities.*;
-import com.GraphiFlow.project_PSC.entities.enums.OrderStatus;
+import com.GraphiFlow.project_PSC.entities.enums.ProjectStatus;
 import com.GraphiFlow.project_PSC.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +19,7 @@ public class TestConfig implements CommandLineRunner {
     private UserRepository userRepository;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private ProjectRepository projectRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -59,14 +59,14 @@ public class TestConfig implements CommandLineRunner {
 
         UserAdm uadm1 = new UserAdm(null, "Adm", "adm@gmail.com","Admin");
 
-        Order o1 = new Order(null, Instant.parse("2024-06-20T19:53:07Z"), OrderStatus.CANCELED, uadm1);
-        Order o2 = new Order(null, Instant.parse("2024-07-21T03:42:10Z"), OrderStatus.WAITING_DELIVERY, uadm1);
-        Order o3 = new Order(null, Instant.parse("2024-07-22T15:21:22Z"), OrderStatus.DELIVERED, uadm1);
-        Order o4 = new Order(null, Instant.parse("2024-07-22T15:21:22Z"), OrderStatus.DELIVERED, uadm1);
-        Order o5 = new Order(null, Instant.parse("2024-07-22T15:21:22Z"), OrderStatus.DELIVERED, uadm1);
+        Project p1 = new Project(null, Instant.parse("2024-06-20T19:53:07Z"), ProjectStatus.CANCELED, uadm1);
+        Project p2 = new Project(null, Instant.parse("2024-07-21T03:42:10Z"), ProjectStatus.WAITING_DELIVERY, uadm1);
+        Project p3 = new Project(null, Instant.parse("2024-07-22T15:21:22Z"), ProjectStatus.DELIVERED, uadm1);
+        Project p4 = new Project(null, Instant.parse("2024-07-22T15:21:22Z"), ProjectStatus.DELIVERED, uadm1);
+        Project p5 = new Project(null, Instant.parse("2024-07-22T15:21:22Z"), ProjectStatus.DELIVERED, uadm1);
 
         userAdmRepository.saveAll(Arrays.asList(uadm1));
         userRepository.saveAll(Arrays.asList(u1, u2));
-        orderRepository.saveAll(Arrays.asList(o1, o2, o3, o4, o5));
+        projectRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
     }
 }
