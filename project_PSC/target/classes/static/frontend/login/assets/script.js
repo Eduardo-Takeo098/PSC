@@ -19,7 +19,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         .then(data => {
             if (data.success) {
                 alert('Login bem sucedido!');
-                window.location.href = '../../home/index.html';
+                window.location.href = './frontend/home/index.html';
             } else {
                 alert('Email ou senha incorretos. Tente novamente.');
             }

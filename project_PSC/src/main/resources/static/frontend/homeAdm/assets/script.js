@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     projectButton.addEventListener('click', function() {
         projectFormModal.style.display = 'block';
+        loadCategories();
     });
 
     closeModal.addEventListener('click', function() {
@@ -35,15 +36,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const taskName = document.getElementById('taskName').value;
         const taskDescription = document.getElementById('taskDescription').value;
         const taskUrlImg = document.getElementById('taskUrlImg').value;
+        const categoryId = document.getElementById('category').value;
 
-        const params = new URLSearchParams({
+        const task = {
             taskName: taskName,
             taskDescription: taskDescription,
-            taskUrlImg: taskUrlImg
-        });
+            taskUrlImg: taskUrlImg,
+            categoryId: categoryId
+        };
 
-        fetch(`/projects?${params.toString()}`, {
-            method: 'POST'
+        fetch('/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(task)
         })
             .then(response => response.json())
             .then(data => {
@@ -57,6 +64,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Erro ao criar projeto e tarefa. Por favor, tente novamente.');
             });
     });
+
+    function loadCategories() {
+        fetch('/categories')
+            .then(response => response.json())
+            .then(categories => {
+                const categorySelect = document.getElementById('category');
+                categorySelect.innerHTML = '';
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.id;
+                    option.textContent = category.name;
+                    categorySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }
 
     fetch('/tasks/groupedByCategory')
         .then(response => response.json())
@@ -102,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     labels: ['Cancelado', 'Aguardando Entrega', 'Entregue'],
                     datasets: [{
                         data: [statuses.CANCELED, statuses.WAITING_DELIVERY, statuses.DELIVERED],
-                        backgroundColor: ['#dc3545', '#ffc107', '#28a745']
+                        backgroundColor: ['#ff6961', '#fdfd96', '#77dd77']
                     }]
                 },
                 options: {

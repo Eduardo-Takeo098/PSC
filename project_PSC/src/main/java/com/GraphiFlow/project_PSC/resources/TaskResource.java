@@ -27,4 +27,15 @@ public class TaskResource {
         Task obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
+
+    @PostMapping
+    public ResponseEntity<Task> createTask(@RequestBody Map<String, String> taskData) {
+        String taskName = taskData.get("taskName");
+        String taskDescription = taskData.get("taskDescription");
+        String taskUrlImg = taskData.get("taskUrlImg");
+        Long categoryId = Long.parseLong(taskData.get("categoryId"));
+
+        Task newTask = service.createTask(taskName, taskDescription, taskUrlImg, categoryId);
+        return ResponseEntity.ok().body(newTask);
+    }
 }
