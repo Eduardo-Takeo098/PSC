@@ -6,10 +6,12 @@ import java.time.Instant;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class StandardError implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; // Número de série para garantir compatibilidade de serialização
 
+    // Campo para armazenar o timestamp do erro, formatado como uma data e hora específicas
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant timestamp;
+    // Campos para armazenar o status do erro, o tipo de erro, a mensagem de erro e o caminho onde ocorreu o erro
     private Integer status;
     private String error;
     private String message;

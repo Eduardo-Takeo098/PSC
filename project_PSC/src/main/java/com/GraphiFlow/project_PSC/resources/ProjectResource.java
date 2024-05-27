@@ -12,45 +12,64 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.List;
 
+// Controlador REST para resources relacionados a projetos.
 @RestController
 @RequestMapping(value = "/projects")
 public class ProjectResource {
 
+    // Injeção de dependência do serviço de ProjectService
     @Autowired
     private ProjectService projectService;
 
+    // Injeção de dependência do serviço de tarefa
     @Autowired
     private TaskService taskService;
 
+    // Endpoint para buscar todos os projetos
     @GetMapping
     public ResponseEntity<List<Project>> findAll() {
+        // Chama o serviço para encontrar todos os projetos
         List<Project> list = projectService.findAll();
+        // Retorna uma resposta HTTP com a lista de projetos
         return ResponseEntity.ok().body(list);
     }
 
+    // Endpoint para buscar um projeto por ID
     @GetMapping(value = "/{id}")
     public ResponseEntity<Project> findById(@PathVariable Long id) {
+        // Chama o serviço para encontrar o projeto com o ID fornecido
         Project obj = projectService.findById(id);
+        // Retorna uma resposta HTTP com o projeto encontrado
         return ResponseEntity.ok().body(obj);
     }
 
+    // Endpoint para criar um projeto com uma tarefa
     @PostMapping
     public ResponseEntity<Project> createProjectWithTask(
+            // Parâmetros da requisição para criar a tarefa
             @RequestParam String taskName,
             @RequestParam String taskDescription,
             @RequestParam(required = false) String taskUrlImg) {
 
-                Project project = new Project();
-                project.setMoment(Instant.now());
-                project.setProjectStatus(ProjectStatus.WAITING_DELIVERY);
-                project = projectService.save(project);
+        // Cria um novo projeto
+        Project project = new Project();
+        // Define o momento atual como momento de criação do projeto
+        project.setMoment(Instant.now());
+        // Define o status do projeto como "WAITING_DELIVERY"
+        project.setProjectStatus(ProjectStatus.WAITING_DELIVERY);
+        // Salva o projeto usando o serviço correspondente
+        project = projectService.save(project);
 
-                Task task = new Task();
-                task.setName(taskName);
-                task.setDescription(taskDescription);
-                task.setImgUrl(taskUrlImg);
-                taskService.save(task);
+        // Cria uma nova tarefa
+        Task task = new Task();
+        // Define o nome, descrição e URL da imagem da tarefa com os parâmetros fornecidos
+        task.setName(taskName);
+        task.setDescription(taskDescription);
+        task.setImgUrl(taskUrlImg);
+        // Salva a tarefa usando o serviço correspondente
+        taskService.save(task);
 
-                return ResponseEntity.ok().body(project);
-            }
+        // Retorna uma resposta HTTP com o projeto criado
+        return ResponseEntity.ok().body(project);
+    }
 }

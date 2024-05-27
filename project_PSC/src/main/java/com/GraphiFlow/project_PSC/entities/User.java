@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "tb_user")
+@Entity // Anota a classe como uma entidade JPA que será mapeada para uma tabela no banco de dados
+@Table(name = "tb_user") // Especifica o nome da tabela no banco de dados que esta entidade representa
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Anota o campo como chave primária da entidade
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Especifica que o valor da chave primária será gerado automaticamente pelo banco de dados
     private Long id;
     private String name;
     private Integer idade;
@@ -98,7 +98,7 @@ public class User implements Serializable {
     }
 
 
-    @Override
+    @Override // Sobrescreve o método equals para comparar entidades por valor do campo id
     public boolean equals(Object o) {
         if (this == o)
             return true;
@@ -108,7 +108,7 @@ public class User implements Serializable {
         return Objects.equals(id, user.id);
     }
 
-    @Override
+    @Override // Sobrescreve o método hashCode para gerar um código hash baseado no campo id
     public int hashCode() {
         return Objects.hashCode(id);
     }

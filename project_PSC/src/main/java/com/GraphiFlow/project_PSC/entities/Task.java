@@ -14,23 +14,23 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "tb_tasks")
+@Entity // Anota a classe como uma entidade JPA que será mapeada para uma tabela no banco de dados
+@Table(name = "tb_tasks") // Especifica o nome da tabela no banco de dados que esta entidade representa
 public class Task implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; // Define uma constante para versionamento da classe, usada na serialização
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Anota o campo como chave primária da entidade
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Especifica que o valor da chave primária será gerado automaticamente pelo banco de dados
     private Long id;
     private String name;
     private String description;
     private String imgUrl;
 
-    @ManyToMany
-    @JoinTable(name = "tb_task_category",
-    joinColumns = @JoinColumn(name = "task_id"),
-    inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories = new HashSet<>();
+    @ManyToMany // há uma relação muitos-para-muitos entre Task e Category.
+    @JoinTable(name = "tb_task_category", // Define a tabela intermediária que conecta Task e Category. A tabela se chama tb_task_category.
+    joinColumns = @JoinColumn(name = "task_id"), // Especifica que a coluna task_id na tabela intermediária se refere à Task.
+    inverseJoinColumns = @JoinColumn(name = "category_id")) // Especifica que a coluna category_id na tabela intermediária se refere à Category.
+    private Set<Category> categories = new HashSet<>(); // Cria um conjunto de Category para armazenar as categorias associadas a uma tarefa.
 
     public Task() {
     }
@@ -78,7 +78,7 @@ public class Task implements Serializable {
         return categories;
     }
 
-    @Override
+    @Override // Sobrescreve o método equals para comparar entidades por valor do campo id
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -86,7 +86,7 @@ public class Task implements Serializable {
         return Objects.equals(id, task.id);
     }
 
-    @Override
+    @Override // Sobrescreve o método hashCode para gerar um código hash baseado no campo id
     public int hashCode() {
         return Objects.hashCode(id);
     }

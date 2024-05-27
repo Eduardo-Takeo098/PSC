@@ -13,21 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "tb_user_adm")
+@Entity // Anota a classe como uma entidade JPA que será mapeada para uma tabela no banco de dados
+@Table(name = "tb_user_adm") // Especifica o nome da tabela no banco de dados que esta entidade representa
 public class UserAdm implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Anota o campo como chave primária da entidade
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Especifica que o valor da chave primária será gerado automaticamente pelo banco de dados
     private Long id;
     private String name;
     private String email;
     private String senha;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "client")
-    private List<Project> projects = new ArrayList<>();
+    @JsonIgnore // Indica que este campo deve ser ignorado na serialização JSON
+    @OneToMany(mappedBy = "client") // Mapeia a relação um-para-muitos com a entidade Project, com mapeamento pelo campo "client"
+    private List<Project> projects = new ArrayList<>(); // Declara uma lista de projetos associados a este cliente, inicializada como uma lista vazia.
 
     public UserAdm() {
     }
@@ -75,7 +75,7 @@ public class UserAdm implements Serializable {
         return projects;
     }
 
-    @Override
+    @Override // Sobrescreve o método equals para comparar entidades por valor do campo id
     public boolean equals(Object o) {
         if (this == o)
             return true;
@@ -85,7 +85,7 @@ public class UserAdm implements Serializable {
         return Objects.equals(id, userAdm.id);
     }
 
-    @Override
+    @Override // Sobrescreve o método hashCode para gerar um código hash baseado no campo id
     public int hashCode() {
         return Objects.hashCode(id);
     }

@@ -14,22 +14,22 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
-@Entity
-@Table(name = "tb_project")
+@Entity // Anota a classe como uma entidade JPA que será mapeada para uma tabela no banco de dados
+@Table(name = "tb_project") // Especifica o nome da tabela no banco de dados que esta entidade representa
 public class Project implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; // Define uma constante para versionamento da classe, usada na serialização
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Anota o campo como chave primária da entidade
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Especifica que o valor da chave primária será gerado automaticamente pelo banco de dados
     private Long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-    private Instant moment;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")  // O fuso horário GMT ao ser serializado para JSON.
+    private Instant moment; // Formata o campo 'moment' para ser representado como uma string no formato ISO 8601
 
-    private Integer projectStatus;
+    private Integer projectStatus; // Armazena o status do projeto como um valor inteiro que representa um código do enum 'ProjectStatus'
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
+    @ManyToOne // Define uma relação muitos-para-um com a entidade 'UserAdm'
+    @JoinColumn(name = "client_id") // mapeando a coluna 'client_id' na tabela 'tb_project' como a chave estrangeira.
     private UserAdm client;
 
     public Project() {
@@ -63,7 +63,7 @@ public class Project implements Serializable {
         return ProjectStatus.valueOf(projectStatus);
     }
 
-    public void setProjectStatus(ProjectStatus projectStatus) {
+    public void setProjectStatus(ProjectStatus projectStatus) { // Inclui lógica para conversão do enum 'ProjectStatus' para seu código inteiro correspondente.
         if (projectStatus != null) {
             this.projectStatus = projectStatus.getCode();
         }
@@ -77,7 +77,7 @@ public class Project implements Serializable {
         this.client = client;
     }
 
-    @Override
+    @Override // Sobrescreve o método equals para comparar entidades por valor do campo id
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -85,7 +85,7 @@ public class Project implements Serializable {
         return Objects.equals(id, project.id);
     }
 
-    @Override
+    @Override // Sobrescreve o método hashCode para gerar um código hash baseado no campo id
     public int hashCode() {
         return Objects.hashCode(id);
     }
