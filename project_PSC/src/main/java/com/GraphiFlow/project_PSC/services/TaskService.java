@@ -27,8 +27,11 @@ public class TaskService {
     public Map<String, List<Task>> findAllGroupedByCategory() {
         // Obtém todas as tarefas do repositório
         List<Task> tasks = repository.findAll();
+
         // Agrupa as tarefas por categoria e retorna o resultado
-        return tasks.stream().collect(Collectors.groupingBy(task -> task.getCategories().iterator().next().getName()));
+        return tasks.stream()
+                .filter(task -> !task.getCategories().isEmpty()) // Filtra tarefas sem categorias
+                .collect(Collectors.groupingBy(task -> task.getCategories().iterator().next().getName()));
     }
 
     // Método para buscar uma tarefa por ID

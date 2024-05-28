@@ -68,19 +68,40 @@ document.addEventListener('DOMContentLoaded', function() {
         })
             // Converte a resposta da requisição para JSON.
             .then(response => response.json())
-            // Se a resposta for bem-sucedida, oculta o modal, reseta o formulário e exibe um alerta de sucesso.
+            // Se a resposta for bem-sucedida, cria o projeto.
             .then(data => {
-                console.log('Success:', data);
-                projectFormModal.style.display = 'none';
-                projectForm.reset();
-                alert('Projeto e tarefa criados com sucesso');
+                console.log('Task created:', data);
+                createProject(taskName, taskDescription, taskUrlImg);
             })
             // Caso ocorra um erro na requisição, exibe um alerta de erro.
             .catch((error) => {
                 console.error('Error:', error);
-                alert('Erro ao criar projeto e tarefa. Por favor, tente novamente.');
+                alert('Erro ao criar a tarefa. Por favor, tente novamente.');
             });
     });
+
+    function createProject(taskName, taskDescription, taskUrlImg) {
+        const params = new URLSearchParams({
+            taskName: taskName,
+            taskDescription: taskDescription,
+            taskUrlImg: taskUrlImg
+        });
+
+        fetch(`/projects?${params.toString()}`, {
+            method: 'POST'
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Project created:', data);
+                projectFormModal.style.display = 'none';
+                projectForm.reset();
+                alert('Projeto e tarefa criados com sucesso');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Erro ao criar o projeto. Por favor, tente novamente.');
+            });
+    }
 
     // Função que carrega as categorias para o select do formulário de projeto.
     function loadCategories() {
