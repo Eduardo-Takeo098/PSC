@@ -1,5 +1,6 @@
 package com.GraphiFlow.project_PSC.services;
 
+import com.GraphiFlow.project_PSC.entities.User;
 import com.GraphiFlow.project_PSC.entities.UserAdm;
 import com.GraphiFlow.project_PSC.repositories.UserAdmRepository;
 import com.GraphiFlow.project_PSC.services.exceptions.DatabaseException;
@@ -77,6 +78,21 @@ public class UserAdmService {
         entity.setName(obj.getName());
         entity.setEmail(obj.getEmail());
         entity.setSenha(obj.getSenha());
+    }
+
+    // Método para autenticar um usuário administrador com base no email e senha fornecidos
+    public UserAdm authenticate(String email, String senha) {
+        // Obtém todos os usuários admnistradores do repositório
+        List<UserAdm> usersAdms = repository.findAll();
+        // Itera sobre os usuários admnistradores para encontrar um com o email e senha correspondentes
+        for (UserAdm userAdm : usersAdms) {
+            if (userAdm.getEmail().equals(email) && userAdm.getSenha().equals(senha)) {
+                // Se encontrar, retorna o usuário admnistrador autenticado
+                return userAdm;
+            }
+        }
+        // Se não encontrar, lança uma exceção ResourceNotFoundException
+        throw new ResourceNotFoundException("Email ou senha inválida");
     }
 
 }

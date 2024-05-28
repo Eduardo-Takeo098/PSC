@@ -1,7 +1,9 @@
 package com.GraphiFlow.project_PSC.resources;
 
+import com.GraphiFlow.project_PSC.entities.User;
 import com.GraphiFlow.project_PSC.entities.UserAdm;
 import com.GraphiFlow.project_PSC.services.UserAdmService;
+import com.GraphiFlow.project_PSC.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // Controlador REST para resources relacionados a UserAdm.
 @RestController
@@ -65,5 +69,31 @@ public class UserAdmResource {
         obj = service.update(id, obj);
         // Retorna uma resposta HTTP com status 200 (OK) e o usuário atualizado no corpo
         return ResponseEntity.ok().body(obj);
+    }
+
+    // Endpoint para autenticar um usuário Administrador
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> loginData) {
+        // Extrai as informações de email e senha dos dados de login fornecidos
+        String email = loginData.get("email");
+        String senha = loginData.get("senha");
+
+        try {
+            // Tenta autenticar o usuário admnistrador usando o serviço
+            UserAdm userAdm = service.authenticate(email, senha);
+            // Cria um mapa de resposta para sucesso de autenticação
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("userAdm", userAdm);
+            response.put("userType", "ADMIN"); // Adiciona tipo de usuário
+            // Retorna uma resposta HTTP com status 200 (OK) e os dados do usuário admnistradores autenticado no corpo
+            return ResponseEntity.ok().body(response);
+        } catch (ResourceNotFoundException e) {
+            // Em caso de falha na autenticação, cria um mapa de resposta indicando falha
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            // Retorna uma resposta HTTP com status 401 (Unauthorized) indicando falha na autenticação
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
     }
 }

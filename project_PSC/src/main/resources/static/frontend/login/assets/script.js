@@ -27,9 +27,16 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         // Verifica se o login foi bem-sucedido.
         .then(data => {
             if (data.success) {
-                // Se o login for bem-sucedido, exibe um alerta de sucesso e redireciona para a página home.
-                alert('Login bem sucedido!');
-                window.location.href = '../home/index.html';
+                // Verifica o tipo de usuário e redireciona para a página apropriada.
+                if (data.userType === 'USER') {
+                    // Se o login for bem-sucedido e o usuário for do tipo 'USER', redireciona para a página home.
+                    alert('Login bem sucedido! Redirecionando para a página do usuário.');
+                    window.location.href = '../home/index.html';
+                } else if (data.userType === 'ADMIN') {
+                    // Se o login for bem-sucedido e o usuário for do tipo 'ADMIN', redireciona para a página do administrador.
+                    alert('Login bem sucedido! Redirecionando para a página de administrador.');
+                    window.location.href = '../homeAdm/index.html';
+                }
             } else {
                 // Se o login não for bem-sucedido, exibe um alerta de erro.
                 alert('Email ou senha incorretos. Tente novamente.');

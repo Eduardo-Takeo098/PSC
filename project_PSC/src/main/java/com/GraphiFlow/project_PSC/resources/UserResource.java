@@ -83,6 +83,7 @@ public class UserResource {
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("user", user);
+            response.put("userType", "USER"); // Adiciona tipo de usuário
             // Retorna uma resposta HTTP com status 200 (OK) e os dados do usuário autenticado no corpo
             return ResponseEntity.ok().body(response);
         } catch (ResourceNotFoundException e) {
