@@ -69,6 +69,7 @@ public class TestConfig implements CommandLineRunner { // implementa a interface
 
         // Criação de um administrador de usuário para teste
         UserAdm uadm1 = new UserAdm(null, "Adm", "adm@gmail.com","Admin");
+        UserAdm uadm2 = new UserAdm(null, "Adm2", "Teste@gmail.com", "Senha");
 
         // Criação de projetos para teste
         Project p1 = new Project(null, Instant.parse("2024-06-20T19:53:07Z"), ProjectStatus.CANCELED, uadm1);
@@ -77,8 +78,8 @@ public class TestConfig implements CommandLineRunner { // implementa a interface
         Project p4 = new Project(null, Instant.parse("2024-07-22T15:21:22Z"), ProjectStatus.DELIVERED, uadm1);
         Project p5 = new Project(null, Instant.parse("2024-07-22T15:21:22Z"), ProjectStatus.DELIVERED, uadm1);
 
-        // Salvando o administrador de usuário no banco de dados
-        userAdmRepository.saveAll(Arrays.asList(uadm1));
+        // Salvando os administradors de usuário no banco de dados
+        userAdmRepository.saveAll(Arrays.asList(uadm1, uadm2));
 
         // Salvando os usuários no banco de dados
         userRepository.saveAll(Arrays.asList(u1, u2));

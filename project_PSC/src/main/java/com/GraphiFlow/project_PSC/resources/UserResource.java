@@ -68,30 +68,4 @@ public class UserResource {
         // Retorna uma resposta HTTP com status 200 (OK) e o usuário atualizado no corpo
         return ResponseEntity.ok().body(obj);
     }
-
-    // Endpoint para autenticar um usuário
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> loginData) {
-        // Extrai as informações de email e senha dos dados de login fornecidos
-        String email = loginData.get("email");
-        String senha = loginData.get("senha");
-
-        try {
-            // Tenta autenticar o usuário usando o serviço
-            User user = service.authenticate(email, senha);
-            // Cria um mapa de resposta para sucesso de autenticação
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
-            response.put("user", user);
-            response.put("userType", "USER"); // Adiciona tipo de usuário
-            // Retorna uma resposta HTTP com status 200 (OK) e os dados do usuário autenticado no corpo
-            return ResponseEntity.ok().body(response);
-        } catch (ResourceNotFoundException e) {
-            // Em caso de falha na autenticação, cria um mapa de resposta indicando falha
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            // Retorna uma resposta HTTP com status 401 (Unauthorized) indicando falha na autenticação
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        }
-    }
 }

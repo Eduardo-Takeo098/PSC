@@ -14,8 +14,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         loginData[key] = value;
     });
 
-    // Faz uma requisição POST para o endpoint '/users/login' enviando os dados de login em formato JSON.
-    fetch('/users/login', {
+    // Faz uma requisição POST para o endpoint '/auth/login' enviando os dados de login em formato JSON.
+    fetch('/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -27,19 +27,17 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         // Verifica se o login foi bem-sucedido.
         .then(data => {
             if (data.success) {
-                // Verifica o tipo de usuário e redireciona para a página apropriada.
+                // Se o login for bem-sucedido, exibe um alerta de sucesso.
+                alert('Login bem sucedido!');
+                // Verifica o tipo de usuário e redireciona para a página correspondente.
                 if (data.userType === 'USER') {
-                    // Se o login for bem-sucedido e o usuário for do tipo 'USER', redireciona para a página home.
-                    alert('Login bem sucedido! Redirecionando para a página do usuário.');
                     window.location.href = '../home/index.html';
                 } else if (data.userType === 'ADMIN') {
-                    // Se o login for bem-sucedido e o usuário for do tipo 'ADMIN', redireciona para a página do administrador.
-                    alert('Login bem sucedido! Redirecionando para a página de administrador.');
                     window.location.href = '../homeAdm/index.html';
                 }
             } else {
                 // Se o login não for bem-sucedido, exibe um alerta de erro.
-                alert('Email ou senha incorretos. Tente novamente.');
+                alert(data.message);
             }
         })
         // Caso ocorra um erro na requisição, exibe um alerta de erro.
