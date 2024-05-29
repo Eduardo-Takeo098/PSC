@@ -32,6 +32,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                 // Verifica o tipo de usuário e redireciona para a página correspondente.
                 if (data.userType === 'USER') {
                     window.location.href = '../home/index.html';
+                    // Verifica o tipo de usuário e redireciona para a página correspondente.
                 } else if (data.userType === 'ADMIN') {
                     window.location.href = '../homeAdm/index.html';
                 }

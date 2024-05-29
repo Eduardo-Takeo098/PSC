@@ -1,56 +1,104 @@
-// Adiciona um listener que será executado quando o conteúdo da página for completamente carregado.
 document.addEventListener('DOMContentLoaded', function() {
-
-    // Seleciona os elementos do DOM: o botão de alternância do menu e o próprio menu.
     const menuToggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
 
-    // Seleciona o botão para abrir o formulário de projeto, o modal do formulário e o botão de fechar o modal.
     const projectButton = document.getElementById('project-button');
     const projectFormModal = document.getElementById('project-form-modal');
-    const closeModal = document.querySelector('.project-form-content .close');
-    // Seleciona o formulário de projeto.
+    const projectCloseModal = document.querySelector('#project-form-modal .close');
     const projectForm = document.getElementById('project-form');
 
-    // Adiciona um listener ao botão de toggle do menu que alterna a exibição do menu.
+    const editButton = document.getElementById('edit-button');
+    const editFormModal = document.getElementById('edit-form-modal');
+    const editCloseModal = document.querySelector('#edit-form-modal .close');
+    const editForm = document.getElementById('edit-form');
+
+    const collaboratorButton = document.getElementById('collaborator-button');
+    const collaboratorFormModal = document.getElementById('collaborator-form-modal');
+    const collaboratorCloseModal = document.querySelector('#collaborator-form-modal .close');
+    const collaboratorForm = document.getElementById('collaborator-form');
+
+    const settingsButton = document.getElementById('settings-button');
+    const settingsFormModal = document.getElementById('settings-form-modal');
+    const settingsCloseModal = document.querySelector('#settings-form-modal .close');
+    const settingsForm = document.getElementById('settings-form');
+
+    // Função para abrir o modal
+    function openModal(modal) {
+        modal.style.display = 'block';
+    }
+
+    // Função para fechar o modal
+    function closeModal(modal) {
+        modal.style.display = 'none';
+    }
+
+    // Alternar visibilidade do menu
     menuToggle.addEventListener('click', function() {
-        if (menu.style.display === 'none' || menu.style.display === '') {
-            menu.style.display = 'flex';
-        } else {
-            menu.style.display = 'none';
-        }
+        menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'flex' : 'none';
     });
 
-    // Adiciona um listener ao botão de projeto que exibe o modal do formulário de projeto e carrega as categorias.
+    // Evento para abrir o modal do projeto
     projectButton.addEventListener('click', function() {
-        projectFormModal.style.display = 'block';
+        openModal(projectFormModal);
         loadCategories();
     });
 
-    // Adiciona um listener ao botão de fechar modal que oculta o modal do formulário de projeto.
-    closeModal.addEventListener('click', function() {
-        projectFormModal.style.display = 'none';
+    // Evento para fechar o modal do projeto
+    projectCloseModal.addEventListener('click', function() {
+        closeModal(projectFormModal);
     });
 
-    // Adiciona um listener para fechar o modal se clicar fora dele.
+    // Evento para abrir o modal de editar tarefas
+    editButton.addEventListener('click', function() {
+        openModal(editFormModal);
+    });
+
+    // Evento para fechar o modal de editar tarefas
+    editCloseModal.addEventListener('click', function() {
+        closeModal(editFormModal);
+    });
+
+    // Evento para abrir o modal de colaboradores
+    collaboratorButton.addEventListener('click', function() {
+        openModal(collaboratorFormModal);
+    });
+
+    // Evento para fechar o modal de colaboradores
+    collaboratorCloseModal.addEventListener('click', function() {
+        closeModal(collaboratorFormModal);
+    });
+
+    // Evento para abrir o modal de configurações de perfil
+    settingsButton.addEventListener('click', function() {
+        openModal(settingsFormModal);
+    });
+
+    // Evento para fechar o modal de configurações de perfil
+    settingsCloseModal.addEventListener('click', function() {
+        closeModal(settingsFormModal);
+    });
+
+    // Fechar modais ao clicar fora deles
     window.addEventListener('click', function(event) {
         if (event.target === projectFormModal) {
-            projectFormModal.style.display = 'none';
+            closeModal(projectFormModal);
+        } else if (event.target === editFormModal) {
+            closeModal(editFormModal);
+        } else if (event.target === collaboratorFormModal) {
+            closeModal(collaboratorFormModal);
+        } else if (event.target === settingsFormModal) {
+            closeModal(settingsFormModal);
         }
     });
 
-    // Adiciona um listener ao formulário de projeto que será executado quando o formulário for submetido.
+    // Eventos de envio dos formulários
     projectForm.addEventListener('submit', function(event) {
-        // Previna o comportamento padrão do formulário (que seria recarregar a página).
         event.preventDefault();
-
-        // Obtém os valores dos campos do formulário.
         const taskName = document.getElementById('taskName').value;
         const taskDescription = document.getElementById('taskDescription').value;
         const taskUrlImg = document.getElementById('taskUrlImg').value;
         const categoryId = document.getElementById('categorySelect').value;
 
-        // Cria um objeto com os dados da tarefa.
         const task = {
             taskName: taskName,
             taskDescription: taskDescription,
@@ -58,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
             categoryId: categoryId
         };
 
-        // Faz uma requisição POST para o endpoint '/tasks' enviando os dados da tarefa em formato JSON.
         fetch('/tasks', {
             method: 'POST',
             headers: {
@@ -66,18 +113,33 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify(task)
         })
-            // Converte a resposta da requisição para JSON.
             .then(response => response.json())
-            // Se a resposta for bem-sucedida, cria o projeto.
             .then(data => {
                 console.log('Task created:', data);
                 createProject(taskName, taskDescription, taskUrlImg);
             })
-            // Caso ocorra um erro na requisição, exibe um alerta de erro.
             .catch((error) => {
                 console.error('Error:', error);
                 alert('Erro ao criar a tarefa. Por favor, tente novamente.');
             });
+    });
+
+    editForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Adicionar lógica de envio do formulário de editar tarefas
+        closeModal(editFormModal);
+    });
+
+    collaboratorForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Adicionar lógica de envio do formulário de colaboradores
+        closeModal(collaboratorFormModal);
+    });
+
+    settingsForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Adicionar lógica de envio do formulário de configurações de perfil
+        closeModal(settingsFormModal);
     });
 
     function createProject(taskName, taskDescription, taskUrlImg) {
@@ -103,12 +165,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // Função que carrega as categorias para o select do formulário de projeto.
     function loadCategories() {
-        // Faz uma requisição GET para o endpoint '/categories' para obter as categorias.
         fetch('/categories')
             .then(response => response.json())
-            // Preenche o select com as categorias obtidas.
             .then(categories => {
                 const categorySelect = document.getElementById('categorySelect');
                 categorySelect.innerHTML = '';
@@ -119,61 +178,46 @@ document.addEventListener('DOMContentLoaded', function() {
                     categorySelect.appendChild(option);
                 });
             })
-            // Caso ocorra um erro na requisição, exibe um erro no console.
             .catch(error => console.error('Error fetching categories:', error));
     }
 
-    // Faz uma requisição para obter as tarefas agrupadas por categoria.
     fetch('/tasks/groupedByCategory')
-        .then(response => response.json())  // Converte a resposta da requisição para JSON.
+        .then(response => response.json())
         .then(data => {
-            // Seleciona o contêiner onde as tarefas serão inseridas.
             const tasksContainer = document.querySelector('.section:nth-child(2) ul');
-            tasksContainer.innerHTML = '';  // Limpa o contêiner de tarefas.
+            tasksContainer.innerHTML = '';
 
-            // Itera sobre os dados recebidos, que estão agrupados por categoria.
             for (const [category, tasks] of Object.entries(data)) {
-                // Cria e adiciona um cabeçalho para cada categoria.
                 const categoryHeader = document.createElement('h3');
                 categoryHeader.textContent = category;
                 tasksContainer.appendChild(categoryHeader);
 
-                // Cria uma lista para as tarefas da categoria.
                 const taskList = document.createElement('ul');
-
-                // Adiciona cada tarefa como um item na lista.
                 tasks.forEach(task => {
                     const taskItem = document.createElement('li');
                     taskItem.textContent = task.name;
                     taskList.appendChild(taskItem);
                 });
 
-                // Adiciona a lista de tarefas ao contêiner de tarefas.
                 tasksContainer.appendChild(taskList);
             }
         })
-        // Caso ocorra um erro na requisição, exibe uma mensagem de erro no console.
         .catch(error => console.error('Error fetching task data:', error));
 
-    // Faz uma requisição para obter os dados dos projetos.
     fetch('/projects')
-        .then(response => response.json())  // Converte a resposta da requisição para JSON.
+        .then(response => response.json())
         .then(data => {
-            // Inicializa um objeto para contar os status dos projetos.
             const statuses = {
                 CANCELED: 0,
                 WAITING_DELIVERY: 0,
                 DELIVERED: 0
             };
 
-            // Itera sobre os dados dos projetos e conta cada status.
             data.forEach(project => {
                 statuses[project.projectStatus]++;
             });
 
-            // Seleciona o contexto do canvas onde o gráfico será desenhado.
             const ctx = document.getElementById('taskChart').getContext('2d');
-            // Cria um gráfico de pizza usando os dados de status dos projetos.
             const taskChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
@@ -188,6 +232,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         })
-        // Caso ocorra um erro na requisição, exibe uma mensagem de erro no console.
         .catch(error => console.error('Error fetching project data:', error));
 });

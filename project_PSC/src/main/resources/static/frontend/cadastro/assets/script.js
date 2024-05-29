@@ -32,8 +32,9 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         // Verifica se a resposta da requisição é bem-sucedida
         .then(response => {
             if (response.ok) {
-                // Se a resposta for positiva, exibe um alerta de sucesso
+                // Se a resposta for positiva, exibe um alerta de sucesso e direciona para o login
                 alert('Usuário criado com sucesso!');
+                window.location.href = '../login/index.html';
             } else {
                 // Se a resposta não for positiva, exibe um alerta de erro
                 alert('Erro ao criar usuário. Por favor, tente novamente.');
