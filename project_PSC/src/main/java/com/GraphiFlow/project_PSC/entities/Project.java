@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 @Entity // Anota a classe como uma entidade JPA que será mapeada para uma tabela no banco de dados

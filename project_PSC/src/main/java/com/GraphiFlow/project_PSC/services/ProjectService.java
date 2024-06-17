@@ -1,36 +1,41 @@
 package com.GraphiFlow.project_PSC.services;
 
 import com.GraphiFlow.project_PSC.entities.Project;
+import com.GraphiFlow.project_PSC.entities.Task;
+import com.GraphiFlow.project_PSC.entities.enums.ProjectStatus;
 import com.GraphiFlow.project_PSC.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 // Classe de serviço para operações relacionadas a Project
 @Service
 public class ProjectService {
 
-    // Injeção de dependência do repositório ProjectRepository
     @Autowired
-    private ProjectRepository repository;
+    private ProjectRepository projectRepository;
 
-    // Método para buscar todos os projetos
+    @Autowired
+    private TaskService taskService;
+
     public List<Project> findAll() {
-        // Chama o método findAll() do repositório para obter a lista de projetos
-        return repository.findAll();
+        return projectRepository.findAll();
     }
 
-    // Método para buscar um projeto por ID
     public Project findById(Long id) {
-        // Chama o método findById() do repositório para obter o projeto com o ID fornecido
-        // Retorna null caso o projeto não seja encontrado
-        return repository.findById(id).orElse(null);
+        return projectRepository.findById(id).orElse(null);
     }
 
-    // Método para salvar um novo projeto ou atualizar um existente
     public Project save(Project project) {
-        // Chama o método save() do repositório para salvar o projeto fornecido
-        return repository.save(project);
+        return projectRepository.save(project);
+    }
+
+    public Project createProjectWithTask(Task task) {
+        Project project = new Project();
+        project.setMoment(Instant.now());
+        project.setProjectStatus(ProjectStatus.WAITING_DELIVERY);
+        return projectRepository.save(project);
     }
 }

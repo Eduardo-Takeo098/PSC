@@ -1,11 +1,14 @@
 package com.GraphiFlow.project_PSC.resources;
 
+import com.GraphiFlow.project_PSC.entities.Project;
 import com.GraphiFlow.project_PSC.entities.Task;
+import com.GraphiFlow.project_PSC.services.ProjectService;
 import com.GraphiFlow.project_PSC.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +20,9 @@ public class TaskResource {
     // Injeção de dependência do serviço de TaskService
     @Autowired
     private TaskService service;
+
+    @Autowired
+    private ProjectService projectService;
 
     // Endpoint para buscar todas as tarefas agrupadas por categoria
     @GetMapping("/groupedByCategory")
@@ -38,16 +44,23 @@ public class TaskResource {
 
     // Endpoint para criar uma nova tarefa
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Map<String, String> taskData) {
-        // Extrai os dados da nova tarefa do corpo da requisição
+    public ResponseEntity<Map<String, Object>> createTaskWithProject(@RequestBody Map<String, String> taskData) {
         String taskName = taskData.get("taskName");
         String taskDescription = taskData.get("taskDescription");
         String taskUrlImg = taskData.get("taskUrlImg");
         Long categoryId = Long.parseLong(taskData.get("categoryId"));
 
-        // Chama o serviço para criar uma nova tarefa com os dados fornecidos
+        // Cria a nova tarefa
         Task newTask = service.createTask(taskName, taskDescription, taskUrlImg, categoryId);
-        // Retorna uma resposta HTTP 200 (OK) com o corpo contendo a nova tarefa criada
-        return ResponseEntity.ok().body(newTask);
+
+        // Cria o novo projeto associado à tarefa
+        Project newProject = projectService.createProjectWithTask(newTask);
+
+        // Retorna a resposta com a nova tarefa e o novo projeto
+        Map<String, Object> response = new HashMap<>();
+        response.put("task", newTask);
+        response.put("project", newProject);
+
+        return ResponseEntity.ok().body(response);
     }
 }

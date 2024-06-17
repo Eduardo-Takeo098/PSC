@@ -305,8 +305,9 @@ header {
         font-size: 1.2em; /* Define o tamanho da fonte */
     }
 }
-/* Estilos gerais para modais */
-.form-modal {
+
+/* Modal do formulário de projeto */
+.project-form-modal {
     display: none; /* Esconde o modal por padrão */
     position: fixed; /* Posiciona o modal de forma fixa na tela */
     z-index: 1000; /* Define a posição z-index */
@@ -319,7 +320,8 @@ header {
     animation: fadeIn 0.3s ease-in-out; /* Aplica a animação "fadeIn" */
 }
 
-.form-content {
+/* Conteúdo do modal do formulário de projeto */
+.project-form-content {
     background-color: #fff; /* Define a cor de fundo como branca */
     margin: 10% auto; /* Adiciona margem ao redor do conteúdo */
     padding: 20px; /* Adiciona preenchimento ao redor do conteúdo */
@@ -332,7 +334,8 @@ header {
     position: relative; /* Define uma posição relativa */
 }
 
-.form-content .close {
+/* Botão de fechar no modal */
+.project-form-content span.close {
     color: #333; /* Define a cor do texto */
     position: absolute; /* Posiciona o botão de forma absoluta */
     top: 10px; /* Alinha o topo ao início do modal */
@@ -341,24 +344,25 @@ header {
     cursor: pointer; /* Define o cursor como ponteiro */
 }
 
-.form-content .close:hover,
-.form-content .close:focus {
+.project-form-content span.close:hover,
+.project-form-content span.close:focus {
     color: #007bff; /* Muda a cor ao passar o mouse ou focar */
 }
 
-.form-content form {
+/* Formulário no modal */
+.project-form-content form {
     display: flex; /* Usa flexbox para organizar o conteúdo */
     flex-direction: column; /* Organiza o conteúdo em colunas */
     gap: 15px; /* Define o espaçamento entre os elementos */
 }
 
-.form-content form label {
+.project-form-content form label {
     font-weight: bold; /* Define o texto em negrito */
 }
 
-.form-content form input,
-.form-content form textarea,
-.form-content form select {
+.project-form-content form input,
+.project-form-content form textarea,
+.project-form-content form select {
     padding: 10px; /* Adiciona preenchimento ao redor do conteúdo */
     border-radius: 5px; /* Arredonda as bordas */
     border: 1px solid #ddd; /* Define uma borda leve */
@@ -366,14 +370,15 @@ header {
     transition: border-color 0.3s ease-in-out; /* Adiciona transição suave ao mudar a cor da borda */
 }
 
-.form-content form input:focus,
-.form-content form textarea:focus,
-.form-content form select:focus {
+.project-form-content form input:focus,
+.project-form-content form textarea:focus,
+.project-form-content form select:focus {
     border-color: #007bff; /* Muda a cor da borda ao focar */
     outline: none; /* Remove o contorno padrão */
 }
 
-.form-content form button {
+/* Botão no formulário do modal */
+.project-form-content form button {
     padding: 10px 15px; /* Adiciona preenchimento ao redor do conteúdo */
     border-radius: 5px; /* Arredonda as bordas */
     border: none; /* Remove a borda padrão */
@@ -384,7 +389,7 @@ header {
     transition: background-color 0.3s ease-in-out; /* Adiciona transição suave ao mudar a cor de fundo */
 }
 
-.form-content form button:hover {
+.project-form-content form button:hover {
     background-color: #0056b3; /* Muda a cor de fundo ao passar o mouse */
 }
 

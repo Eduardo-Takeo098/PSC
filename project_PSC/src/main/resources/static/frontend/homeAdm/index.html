@@ -51,10 +51,10 @@
 
             <!-- Botões para acessar diferentes seções -->
             <div class="buttons">
-                <button id="project-button">Projetos e Tarefas</button>
-                <button id="edit-button">Editar tarefas</button>
-                <button id="collaborator-button">Colaboradores</button>
-                <button id="settings-button">Configurações de perfil</button>
+                <button id="project-button">Projetos</button>
+                <button>Tarefas</button>
+                <button>Colaboradores</button>
+                <button>Configurações Pessoais</button>
             </div>
 
             <!-- Seções de conteúdos principais -->
@@ -108,88 +108,29 @@
     </div>
 </div>
 
-<!-- Modal de formulário de projeto -->
-<div id="project-form-modal" class="form-modal">
-    <div class="form-content">
-        <span class="close">&times;</span>
+<!-- Modal de formulário de projeto (Do botão Projetos)-->
+<div id="project-form-modal" class="project-form-modal">
+    <div class="project-form-content">
+
+        <span class="close">&times;</span> <!-- Botão de fechar modal -->
+
+        <!-- Formulário da tarefa para ser criada -->
         <form id="project-form">
-            <label for="projectName">Nome do Projeto:</label>
-            <input type="text" id="projectName" name="projectName" required>
+            <label for="taskName">Nome:</label> <!-- Campo de nome de tarefa -->
+            <input type="text" id="taskName" name="taskName" required> <!--Necessário preencher -->
 
-            <label for="projectDescription">Descrição:</label>
-            <textarea id="projectDescription" name="projectDescription" required></textarea>
+            <label for="taskDescription">Descrição:</label> <!-- Campo de descrição de tarefa -->
+            <textarea id="taskDescription" name="taskDescription" required></textarea> <!--Necessário preencher -->
 
-            <label for="projectUrlImg">URL da Imagem:</label>
-            <input type="url" id="projectUrlImg" name="projectUrlImg">
+            <label for="taskUrlImg">URL da img:</label> <!-- Campo de URL da imagem da tarefa -->
+            <input type="url" id="taskUrlImg" name="taskUrlImg">
 
-            <label for="categorySelect">Categoria:</label>
-            <select id="categorySelect" name="category" required>
+            <label for="categorySelect">Categoria:</label> <!-- Campo de seleção de categoria -->
+            <select id="categorySelect" name="category" required> <!--Necessário preencher -->
                 <!-- As opções serão preenchidas dinamicamente -->
             </select>
 
-            <button type="submit" id="project-enviar-button">Salvar</button>
-        </form>
-    </div>
-</div>
-
-<!-- Modal de formulário de editar tarefas -->
-<div id="edit-form-modal" class="form-modal">
-    <div class="form-content">
-        <span class="close">&times;</span> <!-- Botão de fechar modal -->
-        <!-- Formulário para editar tarefas -->
-        <form id="edit-form">
-            <label for="editTaskName">Nome:</label>
-            <input type="text" id="editTaskName" name="taskName" required>
-
-            <label for="editTaskDescription">Descrição:</label>
-            <textarea id="editTaskDescription" name="taskDescription" required></textarea>
-
-            <label for="editTaskUrlImg">URL da img:</label>
-            <input type="url" id="editTaskUrlImg" name="taskUrlImg">
-
-            <label for="editCategorySelect">Categoria:</label>
-            <select id="editCategorySelect" name="category" required>
-                <!-- As opções serão preenchidas dinamicamente -->
-            </select>
-
-            <button type="submit" id="edit-enviar-button">Salvar</button>
-        </form>
-    </div>
-</div>
-
-<!-- Modal de formulário de colaboradores -->
-<div id="collaborator-form-modal" class="form-modal">
-    <div class="form-content">
-        <span class="close">&times;</span> <!-- Botão de fechar modal -->
-        <!-- Formulário para adicionar colaboradores -->
-        <form id="collaborator-form">
-            <label for="collaboratorName">Nome:</label>
-            <input type="text" id="collaboratorName" name="collaboratorName" required>
-
-            <label for="collaboratorEmail">Email:</label>
-            <input type="email" id="collaboratorEmail" name="collaboratorEmail" required>
-
-            <button type="submit" id="collaborator-enviar-button">Adicionar</button>
-        </form>
-    </div>
-</div>
-
-<!-- Modal de formulário de configurações de perfil -->
-<div id="settings-form-modal" class="form-modal">
-    <div class="form-content">
-        <span class="close">&times;</span> <!-- Botão de fechar modal -->
-        <!-- Formulário para editar configurações de perfil -->
-        <form id="settings-form">
-            <label for="userName">Nome de usuário:</label>
-            <input type="text" id="userName" name="userName" required>
-
-            <label for="userEmail">Email:</label>
-            <input type="email" id="userEmail" name="userEmail" required>
-
-            <label for="userPassword">Senha:</label>
-            <input type="password" id="userPassword" name="userPassword" required>
-
-            <button type="submit" id="settings-enviar-button">Salvar</button>
+            <button type="submit" id="enviar-button">Enviar</button> <!-- Botão de envio do formulário -->
         </form>
     </div>
 </div>

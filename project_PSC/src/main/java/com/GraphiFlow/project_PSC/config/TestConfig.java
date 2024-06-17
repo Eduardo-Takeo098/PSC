@@ -11,9 +11,8 @@ import org.springframework.context.annotation.Profile;
 import java.time.Instant;
 import java.util.Arrays;
 
-// Configuração da classe como uma configuração do Spring e com perfil "test"
 @Configuration
-@Profile("test") // Só será ativada quando o perfil "test" estiver ativo.
+@Profile("test") // Só será ativada quando o perfil colocado estiver ativo.
 public class TestConfig implements CommandLineRunner { // implementa a interface CommandLineRunner, o que significa que ela terá um método run que será executado após a inicialização da aplicação.
 
     // Injetando os repositórios necessários para acessar o banco de dados.
@@ -34,6 +33,13 @@ public class TestConfig implements CommandLineRunner { // implementa a interface
     // Método que será executado ao iniciar a aplicação
     @Override // Sobrescrevendo o método 'run' da interface (CommandLineRunner).
     public void run(String... args) throws Exception {
+
+        // Apagando todos os dados existentes no banco de dados
+        taskRepository.deleteAll();
+        categoryRepository.deleteAll();
+        projectRepository.deleteAll();
+        userAdmRepository.deleteAll();
+        userRepository.deleteAll();
 
         // Criação das categorias para teste
         Category cat1 = new Category(null, "Área Técnica 01");

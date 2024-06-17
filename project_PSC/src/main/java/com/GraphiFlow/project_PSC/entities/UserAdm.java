@@ -1,14 +1,11 @@
 package com.GraphiFlow.project_PSC.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +21,16 @@ public class UserAdm implements Serializable {
     private String name;
     private String email;
     private String senha;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant moment;
+
+    private Integer projectStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private UserAdm client;
+
 
     @JsonIgnore // Indica que este campo deve ser ignorado na serialização JSON
     @OneToMany(mappedBy = "client") // Mapeia a relação um-para-muitos com a entidade Project, com mapeamento pelo campo "client"
